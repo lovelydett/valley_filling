@@ -1,9 +1,16 @@
-# Rinse the mainboard log data to readable CSV files
-# Intended format: timestamp, thread1:routine:elapsed, thread2:routine:elapsed, ...
+# This script does the following:
+# 1. Converting the log file to csv file, remving the unnecessary information, keeping only thread-core mapping
+# 2. Combine all component into one csv and sort all rows by timestamp
 # Yuting@2022-11-29 
 
 import csv
 from os.path import join
+
+WORKING_DIR = "/home/tt/Codes/valley_filling"
+
+# Set working directory
+import os
+os.chdir(WORKING_DIR)
 
 # Read the mainboard log file
 def convert_log_to_csv(log_path):
@@ -26,7 +33,11 @@ def convert_log_to_csv(log_path):
                 continue
             
             num_core = len(line) - 6
-            csv_writer.writerow([ts] + line[-2-num_core:-2])
+            cores = []
+            for i in range(num_core):
+                idx = line[-3 - i].find(":")
+                cores.append(line[-3 - i][idx + 1:])
+            csv_writer.writerow([ts] + cores)
 
 def convert_dir(log_dir):
     '''
@@ -42,4 +53,4 @@ def convert_dir(log_dir):
 
 if __name__ == "__main__":
     # convert_log_to_csv("../../data/schedule_records/1/log/mainboard.log.INFO.20221126-142555.32603")
-    convert_dir("../../data/schedule_records/1/log")
+    convert_dir("./data/schedule_records/1/log")
