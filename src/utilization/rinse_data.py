@@ -1,6 +1,6 @@
 # This script does the following:
 # 1. Converting the log file to csv file, remving the unnecessary information, keeping only thread-core mapping
-# 2. Combine all component into one csv and sort all rows by timestamp
+# 2. Combine all components into one csv and sort all rows by timestamp
 # Yuting@2022-11-29 
 
 import csv
@@ -53,4 +53,4 @@ def convert_dir(log_dir):
 
 if __name__ == "__main__":
     # convert_log_to_csv("../../data/schedule_records/1/log/mainboard.log.INFO.20221126-142555.32603")
-    convert_dir("./data/schedule_records/1/log")
+    convert_dir("./data/schedule_records/2/log")
